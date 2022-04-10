@@ -1,5 +1,4 @@
 ﻿@namespace BootstrapBlazor.Components
-@inherits BootstrapComponentBase
 
 <div class="@CssClass @(Responsive?"signature-pad-body-responsive":"")">
     <div @ref="SignaturepadElement" class="signature-pad">
@@ -20,8 +19,8 @@
                     }
                     <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="undo">@UndoBtnTitle</button>
                     @if (Responsive && OnClose != null)
-                    {
-                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" @onclick="(async ()=>await Close())">@CloseBtnTitle</button>
+                    { 
+                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="close">@CloseBtnTitle</button>
                     }
                 </div>
                 <div>
