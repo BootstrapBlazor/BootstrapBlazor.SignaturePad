@@ -41,69 +41,69 @@ public partial class SignaturePad : IDisposable
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? SignAboveLabel { get; set; } = "在框内签名";
+    public string? SignAboveLabel { get; set; } 
     /// <summary>
     /// 清除按钮文本/Clear button title
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? ClearBtnTitle { get; set; } = "清除";
+    public string? ClearBtnTitle { get; set; } 
 
     /// <summary>
     /// 请先签名提示文本/'Please provide a signature first' alert text
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? SignatureAlertText { get; set; } = "请先签名";
+    public string? SignatureAlertText { get; set; }
 
     /// <summary>
     /// 换颜色按钮文本/Change color button title
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? ChangeColorBtnTitle { get; set; } = "换颜色";
+    public string? ChangeColorBtnTitle { get; set; } 
 
     /// <summary>
     /// 撤消按钮文本/Undo button title
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? UndoBtnTitle { get; set; } = "撤消";
+    public string? UndoBtnTitle { get; set; }
 
     /// <summary>
     /// 关闭按钮文本/Close button title
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? CloseBtnTitle { get; set; } = "关闭";
+    public string? CloseBtnTitle { get; set; }
 
     /// <summary>
     /// 保存为base64按钮文本/Save as Base64 button title
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? SaveBase64BtnTitle { get; set; } = "确定";
+    public string? SaveBase64BtnTitle { get; set; }
 
     /// <summary>
     /// 保存为PNG按钮文本/Save as PNG button title
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? SavePNGBtnTitle { get; set; } = "PNG";
+    public string? SavePNGBtnTitle { get; set; }
 
     /// <summary>
     /// 保存为JPG按钮文本/Save as JPG button title
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? SaveJPGBtnTitle { get; set; } = "JPG";
+    public string? SaveJPGBtnTitle { get; set; } 
 
     /// <summary>
     /// 保存为SVG按钮文本/Save as SVG button title
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? SaveSVGBtnTitle { get; set; } = "SVG";
+    public string? SaveSVGBtnTitle { get; set; } 
 
     /// <summary>
     /// 启用换颜色按钮/Enable change color button
@@ -194,20 +194,19 @@ public partial class SignaturePad : IDisposable
     {
         base.OnInitialized();
 
-
-        SignAboveLabel ??= LocalizerLabel(nameof(SignAboveLabel));
-        ClearBtnTitle ??= LocalizerLabel(nameof(ClearBtnTitle));
-        SignatureAlertText ??= LocalizerLabel(nameof(SignatureAlertText));
-        ChangeColorBtnTitle ??= LocalizerLabel(nameof(ChangeColorBtnTitle));
-        UndoBtnTitle ??= LocalizerLabel(nameof(UndoBtnTitle));
-        CloseBtnTitle ??= LocalizerLabel(nameof(CloseBtnTitle));
-        SaveBase64BtnTitle ??= LocalizerLabel(nameof(SaveBase64BtnTitle));
-        SavePNGBtnTitle ??= LocalizerLabel(nameof(SavePNGBtnTitle));
-        SaveJPGBtnTitle ??= LocalizerLabel(nameof(SaveJPGBtnTitle));
-        SaveSVGBtnTitle ??= LocalizerLabel(nameof(SaveSVGBtnTitle));
+        SignAboveLabel ??= LocalizerLabel(nameof(SignAboveLabel), "在框内签名");
+        ClearBtnTitle ??= LocalizerLabel(nameof(ClearBtnTitle), "清除");
+        SignatureAlertText ??= LocalizerLabel(nameof(SignatureAlertText), "请先签名");
+        ChangeColorBtnTitle ??= LocalizerLabel(nameof(ChangeColorBtnTitle), "换颜色");
+        UndoBtnTitle ??= LocalizerLabel(nameof(UndoBtnTitle), "撤消");
+        CloseBtnTitle ??= LocalizerLabel(nameof(CloseBtnTitle), "关闭");
+        SaveBase64BtnTitle ??= LocalizerLabel(nameof(SaveBase64BtnTitle), "确定");
+        SavePNGBtnTitle ??= LocalizerLabel(nameof(SavePNGBtnTitle), "PNG");
+        SaveJPGBtnTitle ??= LocalizerLabel(nameof(SaveJPGBtnTitle), "JPG");
+        SaveSVGBtnTitle ??= LocalizerLabel(nameof(SaveSVGBtnTitle), "SVG");
     }
 
-    private string LocalizerLabel(string key) => Localizer[key].ResourceNotFound ? key : Localizer[key];
+    private string LocalizerLabel(string key,string fallback) => Localizer[key].ResourceNotFound ? fallback : Localizer[key];
 
     /// <summary>
     /// OnAfterRenderAsync 方法

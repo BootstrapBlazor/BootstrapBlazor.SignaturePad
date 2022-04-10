@@ -4,15 +4,15 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Version>6.0.0</Version>
+        <Version>6.0.1</Version>
         <IsPackable>true</IsPackable>
         <PackageIcon>logo.png</PackageIcon>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Company>Densen Informatica</Company>
         <Authors>Alex Chow</Authors>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/densen2014/Densen.Extensions/tree/master/BootstrapBlazor.SignaturePad</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/densen2014/Densen.Extensions/tree/master/BootstrapBlazor.SignaturePad</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/densen2014/BootstrapBlazor.SignaturePad</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/densen2014/BootstrapBlazor.SignaturePad</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Bootstrap Blazor SignaturePad Components</PackageTags>
         <Description>Bootstrap UI signaturePad components experience</Description>
