@@ -1,0 +1,51 @@
+﻿@namespace BootstrapBlazor.Components
+@inherits BootstrapComponentBase
+
+<div class="@CssClass @(Responsive?"signature-pad-body-responsive":"")">
+    <div @ref="SignaturepadElement" class="signature-pad">
+        <div class="signature-pad--body">
+            <canvas width="614" style="touch-action: none; user-select: none;" height="242"></canvas>
+        </div>
+        <div class="signature-pad--footer @(Responsive?"signature-pad--footer-responsive":"")">
+            @if (!string.IsNullOrEmpty(SignAboveLabel))
+            {
+                <div class="description @(Responsive ? "description-responsive" : "")">@SignAboveLabel</div>
+            }
+            <div class="signature-pad--actions @(Responsive?"signature-pad--actions-responsive":"")">
+                <div>
+                    <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="clear">@ClearBtnTitle</button>
+                    @if (EnableChangeColorBtn)
+                    {
+                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="change-color">@ChangeColorBtnTitle</button>
+                    }
+                    <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="undo">@UndoBtnTitle</button>
+                    @if (Responsive && OnClose != null)
+                    {
+                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" @onclick="(async ()=>await Close())">@CloseBtnTitle</button>
+                    }
+                </div>
+                <div>
+                    @if (EnableSaveBase64Btn)
+                    {
+                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="save-base64">@SaveBase64BtnTitle</button>
+                    }
+                    @if (EnableSavePNGBtn)
+                    {
+                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="save-png">@SavePNGBtnTitle</button>
+                    }
+                    @if (EnableSaveJPGBtn)
+                    {
+                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="save-jpg">@SaveJPGBtnTitle</button>
+                    }
+                    @if (EnableSaveSVGBtn)
+                    {
+                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="save-svg">@SaveSVGBtnTitle</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<link href="./_content/BootstrapBlazor.SignaturePad/lib/signature_pad/app.css" rel="stylesheet" />
