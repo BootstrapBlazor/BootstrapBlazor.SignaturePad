@@ -8,9 +8,8 @@ namespace BootstrapBlazor.Components;
 /// <summary>
 /// SignaturePad 签名
 /// </summary>
-public partial class SignaturePad : IDisposable
+public partial class SignaturePad : IAsyncDisposable
 {
-    private JSInterop<SignaturePad>? Interop { get; set; }
 
     /// <summary>
     /// 手写签名结果回调/SignaturePad result callback method
@@ -178,14 +177,21 @@ public partial class SignaturePad : IDisposable
     /// </summary>
     private IJSObjectReference? module;
 
+    private IJSObjectReference? instance;
+
     /// <summary>
     ///
     /// </summary>
     protected ElementReference SignaturepadElement { get; set; }
 
+    private DotNetObjectReference<SignaturePad>? wrapper;
+
     [Inject]
     [NotNull]
     private IStringLocalizer<SignaturePad>? Localizer { get; set; }
+
+    [Inject]
+    IJSRuntime? JS { get; set; }
 
     /// <summary>
     /// OnInitialized 方法
@@ -217,10 +223,9 @@ public partial class SignaturePad : IDisposable
         {
             try
             {
-                module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.SignaturePad/lib/signature_pad/app.js");
-                Interop = new JSInterop<SignaturePad>(JSRuntime);
-                await module.InvokeVoidAsync("init", DotNetObjectReference.Create(this), SignaturepadElement, EnableAlertJS ? SignatureAlertText : null, BackgroundColor);
-                //await module.InvokeVoidAsync(this, SignaturepadElement, "bb_SignaturePad",  EnableAlertJS ? SignatureAlertText : "", BackgroundColor );
+                module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.SignaturePad/lib/signature_pad/app.js");
+                wrapper = DotNetObjectReference.Create(this);
+                instance = await module.InvokeAsync<IJSObjectReference>("init", wrapper, SignaturepadElement, EnableAlertJS ? SignatureAlertText : null, BackgroundColor);
             }
             catch (Exception e)
             {
@@ -234,7 +239,7 @@ public partial class SignaturePad : IDisposable
     /// </summary>
     /// <param name="val"></param>
     /// <returns></returns>
-    [JSInvokable("signatureResult")]
+    [JSInvokable]
     public async Task SignatureResult(string? val)
     {
         if (OnResult != null) await OnResult.Invoke(val ?? "");
@@ -244,7 +249,7 @@ public partial class SignaturePad : IDisposable
     /// 告警回调方法
     /// </summary>
     /// <returns></returns>
-    [JSInvokable("signatureAlert")]
+    [JSInvokable]
     public async Task SignatureAlert()
     {
         if (OnAlert != null) await OnAlert.Invoke(SignatureAlertText);
@@ -254,33 +259,30 @@ public partial class SignaturePad : IDisposable
     /// 关闭回调方法
     /// </summary>
     /// <returns></returns>
+    [JSInvokable]
     public async Task Close()
     {
         if (OnClose != null) await OnClose.Invoke();
-    }
+    } 
 
-    /// <summary>
-    /// Dispose 方法
-    /// </summary>
-    protected virtual void Dispose(bool disposing)
+    async ValueTask IAsyncDisposable.DisposeAsync()
     {
-        if (disposing)
+        if (instance != null)
         {
-            if (Interop != null)
-            {
-                Interop.Dispose();
-                Interop = null;
-            }
+            await instance.InvokeVoidAsync("dispose");
+            await instance.DisposeAsync();
+        }
+
+        if (wrapper != null)
+        {
+            wrapper.Dispose();
+        }
+
+        if (module != null)
+        {
+            await module.DisposeAsync();
         }
     }
 
-    /// <summary>
-    /// Dispose 方法
-    /// </summary>
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
 
 }

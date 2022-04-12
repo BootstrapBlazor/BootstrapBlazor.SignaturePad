@@ -10,6 +10,7 @@ export function init(wrapperc, element, alertText, backgroundColor) {
     var savePNGButton = wrapper.querySelector("[data-action=save-png]");
     var saveJPGButton = wrapper.querySelector("[data-action=save-jpg]");
     var saveSVGButton = wrapper.querySelector("[data-action=save-svg]");
+    var closeButton = wrapper.querySelector("[data-action=close]");
     var canvas = wrapper.querySelector("canvas");
     var signaturePad = new SignaturePad(canvas, {
         // It's Necessary to use an opaque color when saving image as JPEG;
@@ -82,7 +83,7 @@ export function init(wrapperc, element, alertText, backgroundColor) {
 
     if (clearButton) clearButton.addEventListener("click", function (event) {
         signaturePad.clear();
-        return wrapperc.invokeMethodAsync("signatureResult", null);
+        return wrapperc.invokeMethodAsync("SignatureResult", null);
     });
 
     if (undoButton) undoButton.addEventListener("click", function (event) {
@@ -109,7 +110,7 @@ export function init(wrapperc, element, alertText, backgroundColor) {
         } else {
             var imgBase64 = signaturePad.toDataURL();
             //console.log(imgBase64);
-            return wrapperc.invokeMethodAsync("signatureResult", imgBase64);
+            return wrapperc.invokeMethodAsync("SignatureResult", imgBase64);
         }
     });
 
@@ -140,8 +141,20 @@ export function init(wrapperc, element, alertText, backgroundColor) {
         }
     });
 
+    if (closeButton) closeButton.addEventListener("click", function (event) { 
+        return wrapperc.invokeMethodAsync("Close", null); 
+    });
+
+
     function alertMessage() {
         if (alertText) alert(alertText);
-        wrapperc.invokeMethodAsync("signatureAlert");
+        wrapperc.invokeMethodAsync("SignatureAlert");
     }
+
+    return {
+        dispose: () => {
+            element.cloneNode(true);
+        }
+    }
+
 }
