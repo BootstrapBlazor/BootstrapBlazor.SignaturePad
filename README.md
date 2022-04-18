@@ -4,6 +4,8 @@
 
 示例:
 
+https://www.blazor.zone/signaturepads
+
 https://blazor.app1.es/signaturepad
 
 使用方法:
