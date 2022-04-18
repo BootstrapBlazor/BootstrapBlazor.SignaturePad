@@ -1,12 +1,10 @@
 # BootstrapBlazor.SignaturePad
 
-# Blazor OnScreenKeyboard 屏幕键盘 组件
-
-定位组件
+# Blazor SignaturePad 手写签名 组件
 
 示例:
 
-https://blazor.app1.es/onscreenkeyboards
+https://blazor.app1.es/signaturepad
 
 使用方法:
 
@@ -21,18 +19,27 @@ https://blazor.app1.es/onscreenkeyboards
 
 3.razor页面
 ```
-<input class="@ClassName"
-          data-kioskboard-type="@KeyboardType.all.ToString()"
-          data-kioskboard-specialcharacters="true"
-          placeholder="全键盘" />
-<input class="@ClassName"
-       data-kioskboard-type="@KeyboardType.keyboard.ToString()"
-       data-kioskboard-placement="@KeyboardPlacement.bottom.ToString()"
-       placeholder="字母键盘" />
-<input class="@ClassName"
-       data-kioskboard-type="@KeyboardType.numpad.ToString()"
-       data-kioskboard-placement="@(KeyboardPlacement.bottom.ToString())"
-       placeholder="数字键盘" />
-<OnScreenKeyboard ClassName="@ClassName" />
+    <SignaturePad OnResult="((e) =>  Result=e)" />
+```
+```
+    <SignaturePad OnResult="((e) =>  Result=e)" BtnCssClass="btn btn-outline-success" />
+```
+```
+    <SignaturePad OnResult="((e) =>  Result=e)"
+                  SignAboveLabel="Sign above"
+                  UndoBtnTitle="Undo"
+                  SaveBase64BtnTitle="OK"
+                  ChangeColorBtnTitle="Change color"
+                  ClearBtnTitle="Clear" />
+```
 
+```
+@code{
+
+    /// <summary>
+    /// 签名Base64
+    /// </summary>
+    public string? Result { get; set; }
+
+}
 ```
