@@ -1,27 +1,26 @@
-## Blazor SignaturePad component
+## Blazor SignaturePad 手写签名 组件
 
-English | [中文](README.zh.CN.md)
+[English](README.md) | 中文
 
 
-
-### Demo
+### 示例
 
 https://www.blazor.zone/signaturepads
 
 https://blazor.app1.es/signaturepad
 
-## Instructions:
+## 使用方法:
 
-1. NuGet install pack 
+1. nuget包
 
-    `BootstrapBlazor.OnScreenKeyboard`
+    ```BootstrapBlazor.SignaturePad```
 
-2. _Imports.razor or Razor page
+2. _Imports.razor 文件 或者页面添加 添加组件库引用
 
-   ```
-   @using BootstrapBlazor.Components
-   ```
-3. Razor page
+    ```@using BootstrapBlazor.Components```
+
+
+3. Razor页面
 
     ```
         <SignaturePad OnResult="((e) =>  Result=e)" />
@@ -49,10 +48,10 @@ https://blazor.app1.es/signaturepad
     }
     ```
 
-4.  More informations
+4. 更多信息请参考
 
-    Bootstrap style Blazor UI component library
-Based on the Bootstrap style library, it is carefully built, and 100 a variety of commonly used components have been added to bring you an extraordinary feeling for rapid development projects
+    Bootstrap 风格的 Blazor UI 组件库
+基于 Bootstrap 样式库精心打造，并且额外增加了 100 多种常用的组件，为您快速开发项目带来非一般的感觉
 
     <https://www.blazor.zone>
 
