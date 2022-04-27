@@ -4,7 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Version>6.0.3</Version>
+        <Version>6.0.4</Version>
         <IsPackable>true</IsPackable>
         <PackageIcon>logo.png</PackageIcon>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -28,13 +28,18 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="logo.png" Pack="true" PackagePath="" />
-    </ItemGroup>
-
-    <ItemGroup>
         <EmbeddedResource Include="Locales\en.json" />
         <EmbeddedResource Include="Locales\zh.json" />
     </ItemGroup>
+
+    <ItemGroup>
+        <None Include="logo.png" Pack="true" PackagePath="" />
+    </ItemGroup>
+    
+    <PropertyGroup>
+        <NoWarn>1701;1702;1705;1591</NoWarn>
+        <DocumentationFile>BootstrapBlazor.SignaturePad.xml</DocumentationFile>
+    </PropertyGroup>
     
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0" />
