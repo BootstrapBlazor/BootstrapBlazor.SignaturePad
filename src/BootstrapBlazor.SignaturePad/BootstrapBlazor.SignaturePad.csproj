@@ -1,16 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Version>6.0.4</Version>
-        <IsPackable>true</IsPackable>
-        <PackageIcon>logo.png</PackageIcon>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Company>Densen Informatica</Company>
-        <Authors>Alex Chow</Authors>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/densen2014/BootstrapBlazor.SignaturePad</PackageProjectUrl>
         <RepositoryUrl>https://github.com/densen2014/BootstrapBlazor.SignaturePad</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
@@ -18,7 +8,6 @@
         <Description>Bootstrap UI signaturePad components experience</Description>
         <AssemblyName>BootstrapBlazor.SignaturePad</AssemblyName>
         <RootNamespace>BootstrapBlazor.SignaturePad</RootNamespace>
-        <SignAssembly>True</SignAssembly>
         <AssemblyOriginatorKeyFile>..\keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
@@ -31,13 +20,8 @@
         <EmbeddedResource Include="Locales\en.json" />
         <EmbeddedResource Include="Locales\zh.json" />
     </ItemGroup>
-
-    <ItemGroup>
-        <None Include="logo.png" Pack="true" PackagePath="" />
-    </ItemGroup>
     
     <PropertyGroup>
-        <NoWarn>1701;1702;1705;1591</NoWarn>
         <DocumentationFile>BootstrapBlazor.SignaturePad.xml</DocumentationFile>
     </PropertyGroup>
     
