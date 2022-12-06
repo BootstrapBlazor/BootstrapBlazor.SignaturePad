@@ -216,7 +216,7 @@ public partial class SignaturePad : IAsyncDisposable
 
     /// <summary>
     /// OnAfterRenderAsync 方法
-    /// </summary
+    /// </summary>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

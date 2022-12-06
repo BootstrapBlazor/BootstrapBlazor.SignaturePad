@@ -144,7 +144,11 @@
             OnInitialized 方法
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:BootstrapBlazor.Components.SignaturePad.OnAfterRenderAsync(System.Boolean)" -->
+        <member name="M:BootstrapBlazor.Components.SignaturePad.OnAfterRenderAsync(System.Boolean)">
+            <summary>
+            OnAfterRenderAsync 方法
+            </summary>
+        </member>
         <member name="M:BootstrapBlazor.Components.SignaturePad.SignatureResult(System.String)">
             <summary>
             签名完成回调方法
