@@ -223,7 +223,7 @@ public partial class SignaturePad : IAsyncDisposable
         {
             try
             {
-                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.SignaturePad/lib/signature_pad/app.js");
+                module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.SignaturePad/lib/signature_pad/app.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 wrapper = DotNetObjectReference.Create(this);
                 instance = await module.InvokeAsync<IJSObjectReference>("init", wrapper, SignaturepadElement, EnableAlertJS ? SignatureAlertText : null, BackgroundColor);
             }
