@@ -17,7 +17,10 @@
                     {
                         <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="change-color">@ChangeColorBtnTitle</button>
                     }
-                    <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="undo">@UndoBtnTitle</button>
+                     @if (EnableUndoBtn)
+                    {
+                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="undo">@UndoBtnTitle</button>
+                    }
                     @if (Responsive && OnClose != null)
                     { 
                         <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="close">@CloseBtnTitle</button>
@@ -26,19 +29,19 @@
                 <div>
                     @if (EnableSaveBase64Btn)
                     {
-                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="save-base64">@SaveBase64BtnTitle</button>
+                        <button type="button" class="@BtnSaveCssClass @(Responsive?"btn-responsive":"")" data-action="save-base64">@SaveBase64BtnTitle</button>
                     }
                     @if (EnableSavePNGBtn)
                     {
-                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="save-png">@SavePNGBtnTitle</button>
+                        <button type="button" class="@BtnSaveCssClass @(Responsive?"btn-responsive":"")" data-action="save-png">@SavePNGBtnTitle</button>
                     }
                     @if (EnableSaveJPGBtn)
                     {
-                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="save-jpg">@SaveJPGBtnTitle</button>
+                        <button type="button" class="@BtnSaveCssClass @(Responsive?"btn-responsive":"")" data-action="save-jpg">@SaveJPGBtnTitle</button>
                     }
                     @if (EnableSaveSVGBtn)
                     {
-                        <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="save-svg">@SaveSVGBtnTitle</button>
+                        <button type="button" class="@BtnSaveCssClass @(Responsive?"btn-responsive":"")" data-action="save-svg">@SaveSVGBtnTitle</button>
                     }
                 </div>
             </div>
