@@ -112,6 +112,13 @@ public partial class SignaturePad : IAsyncDisposable
     public bool EnableChangeColorBtn { get; set; } = true;
 
     /// <summary>
+    /// 启用撤消按钮/Enable undo button
+    /// </summary>
+    [Parameter]
+    [NotNull]
+    public bool EnableUndoBtn { get; set; } = true;
+    
+    /// <summary>
     /// 启用JS错误弹窗/Enable Alert from JS
     /// </summary>
     [Parameter]
@@ -151,6 +158,12 @@ public partial class SignaturePad : IAsyncDisposable
     [Parameter]
     public string BtnCssClass { get; set; } = "btn btn-light";
 
+    /// <summary>
+    /// 按钮 "保存 "的css样式/Button "Save" css style
+    /// </summary>
+    [Parameter]
+    public string BtnSaveCssClass { get; set; } = "btn btn-light";
+    
     /// <summary>
     /// 组件CSS式样/Components css style
     /// </summary>
