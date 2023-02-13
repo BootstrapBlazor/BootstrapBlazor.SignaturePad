@@ -54,7 +54,13 @@ https://blazor.app1.es/signaturepad
 
     <https://www.blazor.zone/signaturepads>
 
-----
+---- 
+#### 更新历史
+
+v7.0.2
+- 添加 EnableUndoBtn : 启用撤消按钮/Enable undo button
+- 添加 BtnSaveCssClass : 按钮 "保存 "的css样式
+- 感谢 ArtemAksenov's pr.
 
 ## Blazor SignaturePad component
  
@@ -112,6 +118,13 @@ Based on the Bootstrap style library, it is carefully built, and 100 a variety o
     <https://www.blazor.zone>
 
     <https://www.blazor.zone/signaturepads>
+
+#### Historial de actualizaciones
+
+v7.0.2
+- Add EnableUndoBtn : Enable undo button
+- Add BtnSaveCssClass : Button "Save" css style
+- Thanks ArtemAksenov's pr.
 
 ---
 #### Blazor 组件
