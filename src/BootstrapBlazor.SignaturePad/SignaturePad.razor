@@ -17,12 +17,12 @@
                     {
                         <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="change-color">@ChangeColorBtnTitle</button>
                     }
-                     @if (EnableUndoBtn)
+                    @if (EnableUndoBtn)
                     {
                         <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="undo">@UndoBtnTitle</button>
                     }
                     @if (Responsive && OnClose != null)
-                    { 
+                    {
                         <button type="button" class="@BtnCssClass @(Responsive?"btn-responsive":"")" data-action="close">@CloseBtnTitle</button>
                     }
                 </div>

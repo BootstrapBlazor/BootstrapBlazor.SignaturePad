@@ -57,6 +57,9 @@ https://blazor.app1.es/signaturepad
 ---- 
 #### 更新历史
 
+v7.0.3
+- 清除按钮改为不触发 OnResult 事件
+
 v7.0.2
 - 添加 EnableUndoBtn : 启用撤消按钮/Enable undo button
 - 添加 BtnSaveCssClass : 按钮 "保存 "的css样式

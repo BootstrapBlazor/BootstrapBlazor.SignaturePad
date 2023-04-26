@@ -83,7 +83,7 @@ export function init(wrapperc, element, alertText, backgroundColor) {
 
     if (clearButton) clearButton.addEventListener("click", function (event) {
         signaturePad.clear();
-        return wrapperc.invokeMethodAsync("SignatureResult", null);
+        //return wrapperc.invokeMethodAsync("SignatureResult", null);
     });
 
     if (undoButton) undoButton.addEventListener("click", function (event) {
