@@ -16,6 +16,7 @@
         <RootNamespace>BootstrapBlazor.SignaturePad</RootNamespace>
         <AssemblyOriginatorKeyFile>..\keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
         <SignAssembly>True</SignAssembly>
+        <OutputPath>..\..\..\Bin</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
