@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿// ********************************** 
+// Densen Informatica 中讯科技 
+// 作者：Alex Chow
+// e-mail:zhouchuanglin@gmail.com 
+// **********************************
+
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 using System.Diagnostics.CodeAnalysis;
@@ -40,13 +46,13 @@ public partial class SignaturePad : IAsyncDisposable
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? SignAboveLabel { get; set; } 
+    public string? SignAboveLabel { get; set; }
     /// <summary>
     /// 清除按钮文本/Clear button title
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? ClearBtnTitle { get; set; } 
+    public string? ClearBtnTitle { get; set; }
 
     /// <summary>
     /// 请先签名提示文本/'Please provide a signature first' alert text
@@ -60,7 +66,7 @@ public partial class SignaturePad : IAsyncDisposable
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? ChangeColorBtnTitle { get; set; } 
+    public string? ChangeColorBtnTitle { get; set; }
 
     /// <summary>
     /// 撤消按钮文本/Undo button title
@@ -95,14 +101,14 @@ public partial class SignaturePad : IAsyncDisposable
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? SaveJPGBtnTitle { get; set; } 
+    public string? SaveJPGBtnTitle { get; set; }
 
     /// <summary>
     /// 保存为SVG按钮文本/Save as SVG button title
     /// </summary>
     [Parameter]
     [NotNull]
-    public string? SaveSVGBtnTitle { get; set; } 
+    public string? SaveSVGBtnTitle { get; set; }
 
     /// <summary>
     /// 启用换颜色按钮/Enable change color button
@@ -117,7 +123,7 @@ public partial class SignaturePad : IAsyncDisposable
     [Parameter]
     [NotNull]
     public bool EnableUndoBtn { get; set; } = true;
-    
+
     /// <summary>
     /// 启用JS错误弹窗/Enable Alert from JS
     /// </summary>
@@ -163,7 +169,7 @@ public partial class SignaturePad : IAsyncDisposable
     /// </summary>
     [Parameter]
     public string BtnSaveCssClass { get; set; } = "btn btn-light";
-    
+
     /// <summary>
     /// 组件CSS式样/Components css style
     /// </summary>
@@ -204,7 +210,7 @@ public partial class SignaturePad : IAsyncDisposable
     private IStringLocalizer<SignaturePad>? Localizer { get; set; }
 
     [Inject]
-    IJSRuntime? JS { get; set; }
+    private IJSRuntime? JS { get; set; }
 
     /// <summary>
     /// OnInitialized 方法
@@ -225,7 +231,7 @@ public partial class SignaturePad : IAsyncDisposable
         SaveSVGBtnTitle ??= LocalizerLabel(nameof(SaveSVGBtnTitle), "SVG");
     }
 
-    private string LocalizerLabel(string key,string fallback) => Localizer[key].ResourceNotFound ? fallback : Localizer[key];
+    private string LocalizerLabel(string key, string fallback) => Localizer[key].ResourceNotFound ? fallback : Localizer[key];
 
     /// <summary>
     /// OnAfterRenderAsync 方法
@@ -276,7 +282,7 @@ public partial class SignaturePad : IAsyncDisposable
     public async Task Close()
     {
         if (OnClose != null) await OnClose.Invoke();
-    } 
+    }
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
@@ -286,10 +292,7 @@ public partial class SignaturePad : IAsyncDisposable
             await instance.DisposeAsync();
         }
 
-        if (wrapper != null)
-        {
-            wrapper.Dispose();
-        }
+        wrapper?.Dispose();
 
         if (module != null)
         {
