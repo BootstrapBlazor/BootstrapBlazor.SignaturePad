@@ -210,7 +210,7 @@ public partial class SignaturePad : IAsyncDisposable
     private IStringLocalizer<SignaturePad>? Localizer { get; set; }
 
     [Inject]
-    private IJSRuntime? JS { get; set; }
+    private IJSRuntime? JSRuntime { get; set; }
 
     /// <summary>
     /// OnInitialized 方法
@@ -242,7 +242,7 @@ public partial class SignaturePad : IAsyncDisposable
         {
             try
             {
-                Module = await JS!.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.SignaturePad/lib/signature_pad/app.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                Module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.SignaturePad/lib/signature_pad/app.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
                 wrapper = DotNetObjectReference.Create(this);
                 instance = await Module.InvokeAsync<IJSObjectReference>("init", wrapper, SignaturepadElement, EnableAlertJS ? SignatureAlertText : null, BackgroundColor);
             }
