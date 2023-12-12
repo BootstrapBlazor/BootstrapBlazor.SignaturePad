@@ -194,22 +194,23 @@ public partial class SignaturePad : IAsyncDisposable
     /// <summary>
     /// 动态JS模块
     /// </summary>
+    private IJSObjectReference? ModuleBase { get; set; }
+
     private IJSObjectReference? Module { get; set; }
 
-    private IJSObjectReference? instance;
-
     /// <summary>
-    ///
+    /// UI界面元素的引用对象
     /// </summary>
-    protected ElementReference SignaturepadElement { get; set; }
+    protected ElementReference Element { get; set; }
 
-    private DotNetObjectReference<SignaturePad>? wrapper;
+    private DotNetObjectReference<SignaturePad>? Instance{ get; set; }
 
     [Inject]
     [NotNull]
     private IStringLocalizer<SignaturePad>? Localizer { get; set; }
 
     [Inject]
+    [NotNull]
     private IJSRuntime? JSRuntime { get; set; }
 
     /// <summary>
@@ -242,9 +243,9 @@ public partial class SignaturePad : IAsyncDisposable
         {
             try
             {
-                Module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.SignaturePad/lib/signature_pad/app.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
-                wrapper = DotNetObjectReference.Create(this);
-                instance = await Module.InvokeAsync<IJSObjectReference>("init", wrapper, SignaturepadElement, EnableAlertJS ? SignatureAlertText : null, BackgroundColor);
+                ModuleBase = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.SignaturePad/lib/signature_pad/app.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+                Instance = DotNetObjectReference.Create(this);
+                Module = await ModuleBase.InvokeAsync<IJSObjectReference>("init", Instance, Element, EnableAlertJS ? SignatureAlertText : null, BackgroundColor);
             }
             catch (Exception e)
             {
@@ -286,17 +287,17 @@ public partial class SignaturePad : IAsyncDisposable
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
-        if (instance != null)
-        {
-            await instance.InvokeVoidAsync("dispose");
-            await instance.DisposeAsync();
-        }
-
-        wrapper?.Dispose();
-
         if (Module != null)
         {
+            await Module.InvokeVoidAsync("dispose");
             await Module.DisposeAsync();
+        }
+
+        Instance?.Dispose();
+
+        if (ModuleBase != null)
+        {
+            await ModuleBase.DisposeAsync();
         }
     }
 
