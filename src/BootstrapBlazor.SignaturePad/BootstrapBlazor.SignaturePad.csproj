@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>8.0.1</Version>
+        <Version>8.0.2-beta01</Version>
         <PackageProjectUrl>https://github.com/densen2014/BootstrapBlazor.SignaturePad</PackageProjectUrl>
         <RepositoryUrl>https://github.com/densen2014/BootstrapBlazor.SignaturePad</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
