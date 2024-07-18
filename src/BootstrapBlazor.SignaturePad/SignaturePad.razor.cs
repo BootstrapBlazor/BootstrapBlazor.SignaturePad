@@ -14,9 +14,8 @@ namespace BootstrapBlazor.Components;
 /// <summary>
 /// SignaturePad 签名
 /// </summary>
-public partial class SignaturePad : IAsyncDisposable
+public partial class SignaturePad
 {
-
     /// <summary>
     /// 手写签名结果回调/SignaturePad result callback method
     /// </summary>
@@ -143,20 +142,20 @@ public partial class SignaturePad : IAsyncDisposable
     /// </summary>
     [Parameter]
     [NotNull]
-    public bool EnableSavePNGBtn { get; set; } = false;
+    public bool EnableSavePNGBtn { get; set; }
 
     /// <summary>
     /// 启用保存为JPG按钮文本/Enable save as JPG button
     /// </summary>
     [Parameter]
     [NotNull]
-    public bool EnableSaveJPGBtn { get; set; } = false;
+    public bool EnableSaveJPGBtn { get; set; }
 
     /// <summary>
     /// 启用保存为SVG按钮文本/Enable save as SVG button
     /// </summary>
     [Parameter]
-    public bool EnableSaveSVGBtn { get; set; } = false;
+    public bool EnableSaveSVGBtn { get; set; }
 
     /// <summary>
     /// 按钮CSS式样/Button css style
@@ -175,6 +174,7 @@ public partial class SignaturePad : IAsyncDisposable
     /// </summary>
     [Parameter]
     [NotNull]
+    [Obsolete("已过期，直接使用 class 即可")]
     public string CssClass { get; set; } = "signature-pad-body";
 
     /// <summary>
@@ -182,43 +182,29 @@ public partial class SignaturePad : IAsyncDisposable
     /// </summary>
     [Parameter]
     [NotNull]
-    public bool Responsive { get; set; } = false;
+    public bool Responsive { get; set; }
 
     /// <summary>
     /// 组件背景/backgroundColor
     /// </summary>
     [Parameter]
-    [NotNull]
-    public string BackgroundColor { get; set; } = "rgb(255, 255, 255)";
-
-    /// <summary>
-    /// 动态JS模块
-    /// </summary>
-    private IJSObjectReference? ModuleBase { get; set; }
-
-    private IJSObjectReference? Module { get; set; }
-
-    /// <summary>
-    /// UI界面元素的引用对象
-    /// </summary>
-    protected ElementReference Element { get; set; }
-
-    private DotNetObjectReference<SignaturePad>? Instance{ get; set; }
+    public string? BackgroundColor { get; set; }
 
     [Inject]
     [NotNull]
     private IStringLocalizer<SignaturePad>? Localizer { get; set; }
 
-    [Inject]
-    [NotNull]
-    private IJSRuntime? JSRuntime { get; set; }
+    private string? ClassString => CssBuilder.Default("signature-pad")
+        .AddClass("signature-pad-body-responsive", Responsive)
+        .AddClassFromAttributes(AdditionalAttributes)
+        .Build();
 
     /// <summary>
-    /// OnInitialized 方法
+    /// <inheritdoc/>
     /// </summary>
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
-        base.OnInitialized();
+        base.OnParametersSet();
 
         SignAboveLabel ??= LocalizerLabel(nameof(SignAboveLabel), "在框内签名");
         ClearBtnTitle ??= LocalizerLabel(nameof(ClearBtnTitle), "清除");
@@ -230,29 +216,15 @@ public partial class SignaturePad : IAsyncDisposable
         SavePNGBtnTitle ??= LocalizerLabel(nameof(SavePNGBtnTitle), "PNG");
         SaveJPGBtnTitle ??= LocalizerLabel(nameof(SaveJPGBtnTitle), "JPG");
         SaveSVGBtnTitle ??= LocalizerLabel(nameof(SaveSVGBtnTitle), "SVG");
+        BackgroundColor ??= "rgb(255, 255, 255)";
     }
 
     private string LocalizerLabel(string key, string fallback) => Localizer[key].ResourceNotFound ? fallback : Localizer[key];
 
     /// <summary>
-    /// OnAfterRenderAsync 方法
+    /// <inheritdoc/>
     /// </summary>
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            try
-            {
-                ModuleBase = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BootstrapBlazor.SignaturePad/lib/signature_pad/app.js" + "?v=" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
-                Instance = DotNetObjectReference.Create(this);
-                Module = await ModuleBase.InvokeAsync<IJSObjectReference>("init", Instance, Element, EnableAlertJS ? SignatureAlertText : null, BackgroundColor);
-            }
-            catch (Exception e)
-            {
-                if (OnError != null) await OnError.Invoke(e.Message);
-            }
-        }
-    }
+    protected override Task InvokeInitAsync() => InvokeVoidAsync("init", Id, Interop, EnableAlertJS ? SignatureAlertText : null, BackgroundColor);
 
     /// <summary>
     /// 签名完成回调方法
@@ -272,7 +244,10 @@ public partial class SignaturePad : IAsyncDisposable
     [JSInvokable]
     public async Task SignatureAlert()
     {
-        if (OnAlert != null) await OnAlert.Invoke(SignatureAlertText);
+        if (OnAlert != null)
+        {
+            await OnAlert.Invoke(SignatureAlertText);
+        }
     }
 
     /// <summary>
@@ -282,24 +257,9 @@ public partial class SignaturePad : IAsyncDisposable
     [JSInvokable]
     public async Task Close()
     {
-        if (OnClose != null) await OnClose.Invoke();
-    }
-
-    async ValueTask IAsyncDisposable.DisposeAsync()
-    {
-        if (Module != null)
+        if (OnClose != null)
         {
-            await Module.InvokeVoidAsync("dispose");
-            await Module.DisposeAsync();
-        }
-
-        Instance?.Dispose();
-
-        if (ModuleBase != null)
-        {
-            await ModuleBase.DisposeAsync();
+            await OnClose.Invoke();
         }
     }
-
-
 }

@@ -16,7 +16,6 @@
         <RootNamespace>BootstrapBlazor.SignaturePad</RootNamespace>
         <AssemblyOriginatorKeyFile>..\keys\Longbow.Utility.snk</AssemblyOriginatorKeyFile>
         <SignAssembly>True</SignAssembly>
-        <OutputPath>..\..\..\Bin</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
@@ -28,7 +27,7 @@
         <EmbeddedResource Include="Locales\en.json" />
         <EmbeddedResource Include="Locales\zh.json" />
     </ItemGroup>
-    
+
     <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.10" />
         <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.10" />
@@ -44,11 +43,8 @@
         <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0" />
     </ItemGroup>
 
-    <!-- 通过移除正常的引用并替换成固定版本的引用，达到无论如何更新都无法生效的目的。 -->
-    <Target Condition="'$(TargetFramework)' == 'net6.0'" Name="ReferenceStaticLegacyPackage" BeforeTargets="CollectPackageReferences">
-        <ItemGroup>
-            <PackageReference Remove="Microsoft.AspNetCore.Components.Web" />
-            <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0" />
-        </ItemGroup>
-    </Target> 
+    <ItemGroup>
+        <PackageReference Include="BootstrapBlazor" Version="8.0.0" />
+    </ItemGroup>
+
 </Project>

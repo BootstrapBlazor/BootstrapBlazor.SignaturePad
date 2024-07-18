@@ -1,17 +1,19 @@
-﻿import '/_content/BootstrapBlazor.SignaturePad/lib/signature_pad/signature_pad.umd.js';
+﻿import './lib/signature_pad.umd.js';
+import Data from '../BootstrapBlazor/modules/data.js'
+import { addLink } from '../BootstrapBlazor/modules/utility.js'
 
-export function init(wrapperc, element, alertText, backgroundColor) {
+export async function init(id, invoke, alertText, backgroundColor) {
     //Code modify from https://github.com/szimek/signature_pad
-    var wrapper = element;//document.getElementById("signature-pad");
-    var clearButton = wrapper.querySelector("[data-action=clear]");
-    var changeColorButton = wrapper.querySelector("[data-action=change-color]");
-    var undoButton = wrapper.querySelector("[data-action=undo]");
-    var saveBase64Button = wrapper.querySelector("[data-action=save-base64]");
-    var savePNGButton = wrapper.querySelector("[data-action=save-png]");
-    var saveJPGButton = wrapper.querySelector("[data-action=save-jpg]");
-    var saveSVGButton = wrapper.querySelector("[data-action=save-svg]");
-    var closeButton = wrapper.querySelector("[data-action=close]");
-    var canvas = wrapper.querySelector("canvas");
+    var element = document.getElementById(id);
+    var clearButton = element.querySelector("[data-action=clear]");
+    var changeColorButton = element.querySelector("[data-action=change-color]");
+    var undoButton = element.querySelector("[data-action=undo]");
+    var saveBase64Button = element.querySelector("[data-action=save-base64]");
+    var savePNGButton = element.querySelector("[data-action=save-png]");
+    var saveJPGButton = element.querySelector("[data-action=save-jpg]");
+    var saveSVGButton = element.querySelector("[data-action=save-svg]");
+    var closeButton = element.querySelector("[data-action=close]");
+    var canvas = element.querySelector("canvas");
     var signaturePad = new SignaturePad(canvas, {
         // It's Necessary to use an opaque color when saving image as JPEG;
         // this option can be omitted if only saving as PNG or SVG
@@ -25,11 +27,11 @@ export function init(wrapperc, element, alertText, backgroundColor) {
         // When zoomed out to less than 100%, for some very strange reason,
         // some browsers report devicePixelRatio as less than 1
         // and only part of the canvas is cleared then.
-        var ratio = Math.max(window.devicePixelRatio || 1, 1);
+        var ratio = devicePixelRatio;
 
         // This part causes the canvas to be cleared
-        canvas.width = canvas.offsetWidth * ratio;
-        canvas.height = canvas.offsetHeight * ratio;
+        canvas.width = canvas.parentElement.offsetWidth * ratio;
+        canvas.height = canvas.parentElement.offsetHeight * ratio;
         canvas.getContext("2d").scale(ratio, ratio);
 
         // This library does not listen for canvas changes, so after the canvas is automatically
@@ -42,9 +44,10 @@ export function init(wrapperc, element, alertText, backgroundColor) {
 
     // On mobile devices it might make more sense to listen to orientation change,
     // rather than window resize events.
-    window.onresize = resizeCanvas;
-    resizeCanvas();
+    const observer = new ResizeObserver(resizeCanvas);
+    observer.observe(element);
 
+    Data.set(id, { observer });
     function download(dataURL, filename) {
         if (navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") === -1) {
             window.open(dataURL);
@@ -110,7 +113,7 @@ export function init(wrapperc, element, alertText, backgroundColor) {
         } else {
             var imgBase64 = signaturePad.toDataURL();
             //console.log(imgBase64);
-            return wrapperc.invokeMethodAsync("SignatureResult", imgBase64);
+            return invoke.invokeMethodAsync("SignatureResult", imgBase64);
         }
     });
 
@@ -141,20 +144,24 @@ export function init(wrapperc, element, alertText, backgroundColor) {
         }
     });
 
-    if (closeButton) closeButton.addEventListener("click", function (event) { 
-        return wrapperc.invokeMethodAsync("Close", null); 
+    if (closeButton) closeButton.addEventListener("click", function (event) {
+        return invoke.invokeMethodAsync("Close", null);
     });
 
 
     function alertMessage() {
         if (alertText) alert(alertText);
-        wrapperc.invokeMethodAsync("SignatureAlert");
+        invoke.invokeMethodAsync("SignatureAlert");
     }
+}
 
-    return {
-        dispose: () => {
-            element.cloneNode(true);
-        }
+export function dispose(id) {
+    const element = document.getElementById(id);
+    if (element) {
+        const observer = Data.get(id);
+
+        observer.unobserve(element);
+        observer.disconnect();
     }
-
+    Data.remove(id);
 }
